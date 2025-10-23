@@ -20,10 +20,16 @@ This repository outlines the **minimal manual changes** required to enable on‑
 3. **Patch** the `hwcomposer.*` library under `/vendor/lib64/hw/`
    (e.g. `hwcomposer.mtkcommon.so`, `hwcomposer.mt6893.so`, etc.)
 
+   Example using `sed`:
+
+   ```bash
+   sed -i 's/OnScreenFingerprintDimLayer/VRI[RianixiaHBMController]yer/g' /vendor/lib64/hw/hwcomposer.*.so
+   ```
+
 4. **Complete.**
 
 ---
 
 ## Credit
 
-Credit **@ryanistr** on github or **@rianixia** on Telegram, or reference this GitHub repository when used to fix your FOD.
+Credit **@ryanistr** on GitHub or **@rianixia** on Telegram, or reference this GitHub repository when used to fix your FOD.
