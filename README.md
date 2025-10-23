@@ -25,8 +25,15 @@ This repository outlines the **minimal manual changes** required to enable on‑
    ```bash
    sed -i 's/OnScreenFingerprintDimLayer/VRI[RianixiaHBMController]yer/g' /vendor/lib64/hw/hwcomposer.*.so
    ```
+4. For SOFOD run on permissive or enforcing
 
-4. **Complete.**
+5. **Complete.**
+
+---
+
+## Notes
+
+This patch was only used on Goodix FOD.
 
 ---
 
