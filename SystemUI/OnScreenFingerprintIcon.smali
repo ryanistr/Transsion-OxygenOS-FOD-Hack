@@ -1,5 +1,3 @@
-# classes5.dex
-
 .class public final Lcom/oplus/systemui/biometrics/finger/udfps/OnScreenFingerprintIcon;
 .super Landroid/widget/ImageView;
 .source "OnScreenFingerprintIcon.kt"
@@ -17,6 +15,10 @@
 .field public logCount:I
 
 .field public final logString:Ljava/lang/StringBuffer;
+
+.field public mHbmDummyView:Landroid/view/View;
+
+.field public mHbmSurfaceControl:Landroid/view/SurfaceControl;
 
 .field public final onScreenBrightnessUtils:Lcom/oplus/systemui/biometrics/finger/udfps/OnScreenBrightnessUtils;
 
@@ -64,6 +66,14 @@
 
     .line 64
     invoke-direct {p0, p1}, Landroid/widget/ImageView;-><init>(Landroid/content/Context;)V
+
+    const/4 v0, 0x1
+
+    invoke-virtual {p0, v0}, Landroid/widget/ImageView;->setFocusable(Z)V
+
+    invoke-virtual {p0, v0}, Landroid/widget/ImageView;->setFocusableInTouchMode(Z)V
+
+    invoke-virtual {p0}, Landroid/widget/ImageView;->requestFocus()Z
 
     .line 86
     new-instance v0, Ljava/lang/StringBuffer;
@@ -162,13 +172,13 @@
 
     iput-object p1, p0, Lcom/oplus/systemui/biometrics/finger/udfps/OnScreenFingerprintIcon;->onScreenBrightnessUtils:Lcom/oplus/systemui/biometrics/finger/udfps/OnScreenBrightnessUtils;
 
-    if-eqz p1, :cond_5f
+    if-eqz p1, :cond_69
 
     .line 77
     invoke-virtual {p1, p0}, Lcom/oplus/systemui/biometrics/finger/udfps/OnScreenBrightnessUtils;->setOnScreenFingerprintIcon(Lcom/oplus/systemui/biometrics/finger/udfps/OnScreenFingerprintIcon;)V
 
     .line 79
-    :cond_5f
+    :cond_69
     iput-object p5, p0, Lcom/oplus/systemui/biometrics/finger/udfps/OnScreenFingerprintIcon;->parent:Landroid/widget/FrameLayout;
 
     const/4 p1, 0x0
@@ -259,6 +269,435 @@
 
 
 # virtual methods
+.method public createHbmSurfaceControl()V
+    .registers 15
+
+    .line 0
+    const-string v12, "OnScreenFingerprintIcon"
+
+    const-string v13, "createHbmSurfaceControl: calling hwcomposer"
+
+    invoke-static {v12, v13}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+
+    iget-object v0, p0, Lcom/oplus/systemui/biometrics/finger/udfps/OnScreenFingerprintIcon;->mHbmSurfaceControl:Landroid/view/SurfaceControl;
+
+    if-eqz v0, :cond_11
+
+    const-string v0, "HBM is already enabled"
+
+    invoke-static {v12, v0}, Landroid/util/Log;->w(Ljava/lang/String;Ljava/lang/String;)I
+
+    return-void
+
+    :cond_11
+    invoke-virtual {p0}, Landroid/widget/ImageView;->getContext()Landroid/content/Context;
+
+    move-result-object v2
+
+    const-string/jumbo v0, "window"
+
+    invoke-virtual {v2, v0}, Landroid/content/Context;->getSystemService(Ljava/lang/String;)Ljava/lang/Object;
+
+    move-result-object v3
+
+    check-cast v3, Landroid/view/WindowManager;
+
+    const/4 v11, 0x2
+
+    new-array v5, v11, [I
+
+    invoke-virtual {p0, v5}, Landroid/widget/ImageView;->getLocationOnScreen([I)V
+
+    const/4 v6, 0x0
+
+    aget v7, v5, v6
+
+    const/4 v6, 0x1
+
+    aget v8, v5, v6
+
+    invoke-virtual {p0}, Landroid/widget/ImageView;->getWidth()I
+
+    move-result v4
+
+    invoke-virtual {p0}, Landroid/widget/ImageView;->getHeight()I
+
+    move-result v9
+
+    new-instance v10, Landroid/view/WindowManager$LayoutParams;
+
+    invoke-direct {v10}, Landroid/view/WindowManager$LayoutParams;-><init>()V
+
+    iput v4, v10, Landroid/view/WindowManager$LayoutParams;->width:I
+
+    iput v9, v10, Landroid/view/WindowManager$LayoutParams;->height:I
+
+    iput v7, v10, Landroid/view/WindowManager$LayoutParams;->x:I
+
+    iput v8, v10, Landroid/view/WindowManager$LayoutParams;->y:I
+
+    const/16 v0, 0x7f7
+
+    iput v0, v10, Landroid/view/WindowManager$LayoutParams;->type:I
+
+    const v0, 0x1080028
+
+    iput v0, v10, Landroid/view/WindowManager$LayoutParams;->flags:I
+
+    const/4 v0, -0x3
+
+    iput v0, v10, Landroid/view/WindowManager$LayoutParams;->format:I
+
+    const-string v0, "RianixiaHBMController"
+
+    invoke-virtual {v10, v0}, Landroid/view/WindowManager$LayoutParams;->setTitle(Ljava/lang/CharSequence;)V
+
+    const/16 v0, 0x33
+
+    iput v0, v10, Landroid/view/WindowManager$LayoutParams;->gravity:I
+
+    new-instance v11, Landroid/view/View;
+
+    invoke-direct {v11, v2}, Landroid/view/View;-><init>(Landroid/content/Context;)V
+
+    const/4 v0, 0x0
+
+    invoke-virtual {v11, v0}, Landroid/view/View;->setAlpha(F)V
+
+    invoke-interface {v3, v11, v10}, Landroid/view/WindowManager;->addView(Landroid/view/View;Landroid/view/ViewGroup$LayoutParams;)V
+
+    iput-object v11, p0, Lcom/oplus/systemui/biometrics/finger/udfps/OnScreenFingerprintIcon;->mHbmDummyView:Landroid/view/View;
+
+    invoke-virtual {v11}, Landroid/view/View;->getViewRootImpl()Landroid/view/ViewRootImpl;
+
+    move-result-object v0
+
+    if-nez v0, :cond_76
+
+    const-string v1, "ViewRootImpl is null - waiting for attachment"
+
+    invoke-static {v12, v1}, Landroid/util/Log;->w(Ljava/lang/String;Ljava/lang/String;)I
+
+    new-instance v1, Lcom/oplus/systemui/biometrics/finger/udfps/OnScreenFingerprintIcon$1;
+
+    invoke-direct {v1, p0}, Lcom/oplus/systemui/biometrics/finger/udfps/OnScreenFingerprintIcon$1;-><init>(Lcom/oplus/systemui/biometrics/finger/udfps/OnScreenFingerprintIcon;)V
+
+    invoke-virtual {v11, v1}, Landroid/view/View;->post(Ljava/lang/Runnable;)Z
+
+    return-void
+
+    :cond_76
+    invoke-virtual {v0}, Landroid/view/ViewRootImpl;->getSurfaceControl()Landroid/view/SurfaceControl;
+
+    move-result-object v1
+
+    if-eqz v1, :cond_84
+
+    iput-object v1, p0, Lcom/oplus/systemui/biometrics/finger/udfps/OnScreenFingerprintIcon;->mHbmSurfaceControl:Landroid/view/SurfaceControl;
+
+    const-string v2, "Triggered FULL_HBM_SET"
+
+    invoke-static {v12, v2}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+
+    return-void
+
+    :cond_84
+    const-string v2, "Failed to get SurfaceControl from ViewRootImpl"
+
+    invoke-static {v12, v2}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
+
+    invoke-interface {v3, v11}, Landroid/view/WindowManager;->removeView(Landroid/view/View;)V
+
+    return-void
+.end method
+
+.method public destroyHbmSurfaceControl()V
+    .registers 6
+
+    .line 0
+    const-string v0, "OnScreenFingerprintIcon"
+
+    const-string v1, "destroyHbmSurfaceControl: onFingerUp"
+
+    invoke-static {v0, v1}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+
+    iget-object v2, p0, Lcom/oplus/systemui/biometrics/finger/udfps/OnScreenFingerprintIcon;->mHbmDummyView:Landroid/view/View;
+
+    if-eqz v2, :cond_2c
+
+    invoke-virtual {v2}, Landroid/view/View;->getContext()Landroid/content/Context;
+
+    move-result-object v3
+
+    const-string/jumbo v1, "window"
+
+    invoke-virtual {v3, v1}, Landroid/content/Context;->getSystemService(Ljava/lang/String;)Ljava/lang/Object;
+
+    move-result-object v3
+
+    check-cast v3, Landroid/view/WindowManager;
+
+    :try_start_18
+    invoke-interface {v3, v2}, Landroid/view/WindowManager;->removeView(Landroid/view/View;)V
+    :try_end_1b
+    .catch Ljava/lang/Exception; {:try_start_18 .. :try_end_1b} :catch_1c
+
+    goto :goto_22
+
+    :catch_1c
+    move-exception v1
+
+    const-string v3, "Error stopping hbm"
+
+    invoke-static {v0, v3, v1}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I
+
+    :goto_22
+    const-string v1, "Removed FULL_HBM_SET"
+
+    invoke-static {v0, v1}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+
+    const/4 v4, 0x0
+
+    iput-object v4, p0, Lcom/oplus/systemui/biometrics/finger/udfps/OnScreenFingerprintIcon;->mHbmDummyView:Landroid/view/View;
+
+    iput-object v4, p0, Lcom/oplus/systemui/biometrics/finger/udfps/OnScreenFingerprintIcon;->mHbmSurfaceControl:Landroid/view/SurfaceControl;
+
+    :cond_2c
+    return-void
+.end method
+
+.method public dispatchKeyEvent(Landroid/view/KeyEvent;)Z
+    .registers 12
+
+    const-string v5, "OnScreenFingerprintIcon"
+
+    const-string v6, "dispatchKeyEvent: Finger down monitor start"
+
+    invoke-static {v5, v6}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+
+    .line 0
+    invoke-virtual {p1}, Landroid/view/KeyEvent;->getScanCode()I
+
+    move-result v0
+
+    invoke-virtual {p1}, Landroid/view/KeyEvent;->getKeyCode()I
+
+    move-result v1
+
+    invoke-virtual {p1}, Landroid/view/KeyEvent;->getAction()I
+
+    move-result v2
+
+    invoke-virtual {p1}, Landroid/view/KeyEvent;->getRepeatCount()I
+
+    move-result v3
+
+    new-instance v5, Ljava/lang/StringBuilder;
+
+    invoke-direct {v5}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v6, "dispatchKeyEvent: scanCode="
+
+    invoke-virtual {v5, v6}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v5
+
+    invoke-virtual {v5, v0}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+
+    move-result-object v5
+
+    const-string v6, ", keyCode="
+
+    invoke-virtual {v5, v6}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v5
+
+    invoke-virtual {v5, v1}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+
+    move-result-object v5
+
+    const-string v6, ", action="
+
+    invoke-virtual {v5, v6}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v5
+
+    invoke-virtual {v5, v2}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+
+    move-result-object v5
+
+    const-string v6, ", repeat="
+
+    invoke-virtual {v5, v6}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v5
+
+    invoke-virtual {v5, v3}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+
+    move-result-object v5
+
+    invoke-virtual {v5}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v5
+
+    const-string v6, "OnScreenFingerprintIcon"
+
+    invoke-static {v6, v5}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+
+    const/16 v4, 0xc3
+
+    const-string v5, "OnScreenFingerprintIcon"
+
+    const-string v6, "dispatchKeyEvent: recieved"
+
+    invoke-static {v5, v6}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+
+    if-ne v0, v4, :cond_ce
+
+    new-instance v4, Ljava/lang/StringBuilder;
+
+    invoke-direct {v4}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string/jumbo v5, "scanCode="
+
+    invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v4
+
+    invoke-virtual {v4, v0}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+
+    move-result-object v0
+
+    const-string v4, " action="
+
+    invoke-virtual {v0, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v0
+
+    invoke-virtual {v0, v2}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+
+    move-result-object v0
+
+    const-string v4, " repeat="
+
+    invoke-virtual {v0, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v0
+
+    invoke-virtual {v0, v3}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+
+    move-result-object v0
+
+    invoke-virtual {v0}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v0
+
+    const-string v4, "OnScreenFingerprintIcon"
+
+    invoke-static {v4, v0}, Landroid/util/Log;->i(Ljava/lang/String;Ljava/lang/String;)I
+
+    const/4 v0, 0x1
+
+    if-nez v2, :cond_ab
+
+    if-eqz v3, :cond_92
+
+    const-string v1, "OnScreenFingerprintIcon"
+
+    const-string v2, "dispatchKeyEvent: KeyDown repeat, ignoring."
+
+    invoke-static {v1, v2}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+
+    goto :goto_c6
+
+    :cond_92
+    const-string v1, "OnScreenFingerprintIcon"
+
+    const-string v2, "onFingerDown"
+
+    invoke-static {v1, v2}, Landroid/util/Log;->i(Ljava/lang/String;Ljava/lang/String;)I
+
+    invoke-virtual {p0, p1}, Lcom/oplus/systemui/biometrics/finger/udfps/OnScreenFingerprintIcon;->handleFingerprintKeyPress(Landroid/view/KeyEvent;)V
+
+    iget-object v1, p0, Lcom/oplus/systemui/biometrics/finger/udfps/OnScreenFingerprintIcon;->onScreenFingerprintUiMech:Lcom/oplus/systemui/biometrics/finger/udfps/OnScreenFingerprintUiMech;
+
+    if-eqz v1, :cond_c6
+
+    const-string v2, "OnScreenFingerprintIcon"
+
+    const-string v3, "dispatchKeyEvent: Forwarding KeyDown as onFpTouch(true)"
+
+    invoke-static {v2, v3}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+
+    invoke-virtual {v1, v0}, Lcom/oplus/systemui/biometrics/finger/udfps/OnScreenFingerprintUiMech;->onFpTouch(Z)V
+
+    goto :goto_c6
+
+    :cond_ab
+    if-ne v2, v0, :cond_c6
+
+    const-string v1, "OnScreenFingerprintIcon"
+
+    const-string v2, "onFingerUp"
+
+    invoke-static {v1, v2}, Landroid/util/Log;->i(Ljava/lang/String;Ljava/lang/String;)I
+
+    invoke-virtual {p0, p1}, Lcom/oplus/systemui/biometrics/finger/udfps/OnScreenFingerprintIcon;->handleFingerprintKeyRelease(Landroid/view/KeyEvent;)V
+
+    iget-object v1, p0, Lcom/oplus/systemui/biometrics/finger/udfps/OnScreenFingerprintIcon;->onScreenFingerprintUiMech:Lcom/oplus/systemui/biometrics/finger/udfps/OnScreenFingerprintUiMech;
+
+    if-eqz v1, :cond_c6
+
+    const-string v2, "OnScreenFingerprintIcon"
+
+    const-string v3, "dispatchKeyEvent: Forwarding KeyUp as onFpTouch(false)"
+
+    invoke-static {v2, v3}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+
+    const/4 v2, 0x0
+
+    invoke-virtual {v1, v2}, Lcom/oplus/systemui/biometrics/finger/udfps/OnScreenFingerprintUiMech;->onFpTouch(Z)V
+
+    :cond_c6
+    :goto_c6
+    const-string v1, "OnScreenFingerprintIcon"
+
+    const-string v2, "dispatchKeyEvent: Handled event, returning true."
+
+    invoke-static {v1, v2}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+
+    return v0
+
+    :cond_ce
+    new-instance v4, Ljava/lang/StringBuilder;
+
+    invoke-direct {v4}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v5, "dispatchKeyEvent: checking"
+
+    invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v4
+
+    invoke-virtual {v4, v0}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+
+    move-result-object v0
+
+    invoke-virtual {v0}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v0
+
+    const-string v4, "OnScreenFingerprintIcon"
+
+    invoke-static {v4, v0}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+
+    invoke-super {p0, p1}, Landroid/widget/ImageView;->dispatchKeyEvent(Landroid/view/KeyEvent;)Z
+
+    move-result p1
+
+    return p1
+.end method
+
 .method public final getLogStr()Ljava/lang/String;
     .registers 1
 
@@ -270,6 +709,106 @@
     move-result-object p0
 
     return-object p0
+.end method
+
+.method public handleFingerprintKeyPress(Landroid/view/KeyEvent;)V
+    .registers 9
+
+    const-string v0, "OnScreenFingerprintIcon"
+
+    const-string v1, "Triggered onFingerDown"
+
+    invoke-static {v0, v1}, Landroid/util/Log;->i(Ljava/lang/String;Ljava/lang/String;)I
+
+    invoke-virtual {p1}, Landroid/view/KeyEvent;->getEventTime()J
+
+    move-result-wide v0
+
+    invoke-virtual {p1}, Landroid/view/KeyEvent;->getRepeatCount()I
+
+    move-result v2
+
+    new-instance v3, Ljava/lang/StringBuilder;
+
+    invoke-direct {v3}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v4, "Event time: "
+
+    invoke-virtual {v3, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    invoke-virtual {v3, v0, v1}, Ljava/lang/StringBuilder;->append(J)Ljava/lang/StringBuilder;
+
+    const-string v0, ", Repeat: "
+
+    invoke-virtual {v3, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    invoke-virtual {v3, v2}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+
+    invoke-virtual {v3}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v0
+
+    const-string v1, "OnScreenFingerprintIcon"
+
+    invoke-static {v1, v0}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+
+    const-string v0, "FP_KEY_DOWN"
+
+    invoke-virtual {p0, v0}, Lcom/oplus/systemui/biometrics/finger/udfps/OnScreenFingerprintIcon;->saveLog(Ljava/lang/String;)V
+
+    invoke-virtual {p0}, Lcom/oplus/systemui/biometrics/finger/udfps/OnScreenFingerprintIcon;->createHbmSurfaceControl()V
+
+    iget-object v0, p0, Lcom/oplus/systemui/biometrics/finger/udfps/OnScreenFingerprintIcon;->onScreenFingerprintUiMech:Lcom/oplus/systemui/biometrics/finger/udfps/OnScreenFingerprintUiMech;
+
+    if-eqz v0, :cond_39
+
+    :cond_39
+    return-void
+.end method
+
+.method public handleFingerprintKeyRelease(Landroid/view/KeyEvent;)V
+    .registers 7
+
+    const-string v0, "OnScreenFingerprintIcon"
+
+    const-string v1, "Detected onFingerUp"
+
+    invoke-static {v0, v1}, Landroid/util/Log;->i(Ljava/lang/String;Ljava/lang/String;)I
+
+    invoke-virtual {p1}, Landroid/view/KeyEvent;->getEventTime()J
+
+    move-result-wide v0
+
+    new-instance v2, Ljava/lang/StringBuilder;
+
+    invoke-direct {v2}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v3, "Event time: "
+
+    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    invoke-virtual {v2, v0, v1}, Ljava/lang/StringBuilder;->append(J)Ljava/lang/StringBuilder;
+
+    invoke-virtual {v2}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v0
+
+    const-string v1, "OnScreenFingerprintIcon"
+
+    invoke-static {v1, v0}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+
+    const-string v0, "FP_KEY_UP"
+
+    invoke-virtual {p0, v0}, Lcom/oplus/systemui/biometrics/finger/udfps/OnScreenFingerprintIcon;->saveLog(Ljava/lang/String;)V
+
+    invoke-virtual {p0}, Lcom/oplus/systemui/biometrics/finger/udfps/OnScreenFingerprintIcon;->destroyHbmSurfaceControl()V
+
+    iget-object v0, p0, Lcom/oplus/systemui/biometrics/finger/udfps/OnScreenFingerprintIcon;->onScreenFingerprintUiMech:Lcom/oplus/systemui/biometrics/finger/udfps/OnScreenFingerprintUiMech;
+
+    if-eqz v0, :cond_2d
+
+    :cond_2d
+    return-void
 .end method
 
 .method public hasOverlappingRendering()Z
@@ -306,7 +845,6 @@
 .method public onTouchEvent(Landroid/view/MotionEvent;)Z
     .registers 2
 
-    .line 0
     const/4 p0, 0x1
 
     return p0
@@ -476,6 +1014,15 @@
     return-void
 .end method
 
+.method public setHbmSurfaceControl(Landroid/view/SurfaceControl;)V
+    .registers 2
+
+    .line 0
+    iput-object p1, p0, Lcom/oplus/systemui/biometrics/finger/udfps/OnScreenFingerprintIcon;->mHbmSurfaceControl:Landroid/view/SurfaceControl;
+
+    return-void
+.end method
+
 .method public final setMaxBrightnessToAlpha(F)V
     .registers 4
 
@@ -508,12 +1055,12 @@
 .end method
 
 .method public setVisibility(I)V
-    .registers 7
+    .registers 9
 
     .line 147
     iget v0, p0, Lcom/oplus/systemui/biometrics/finger/udfps/OnScreenFingerprintIcon;->visibility:I
 
-    if-eq v0, p1, :cond_8e
+    if-eq v0, p1, :cond_91
 
     .line 148
     iput p1, p0, Lcom/oplus/systemui/biometrics/finger/udfps/OnScreenFingerprintIcon;->visibility:I
@@ -621,11 +1168,13 @@
 
     invoke-virtual {v0, p0, v1}, Lcom/oplus/systemui/aod/display/AODDisplayUtil;->requestScreenState(Landroid/view/View;I)V
 
-    goto :goto_7c
+    goto :goto_7f
 
     .line 167
     :cond_6d
     invoke-virtual {p0}, Lcom/oplus/systemui/biometrics/finger/udfps/OnScreenFingerprintIcon;->stopSwitchAnim()V
+
+    invoke-virtual {p0}, Lcom/oplus/systemui/biometrics/finger/udfps/OnScreenFingerprintIcon;->destroyHbmSurfaceControl()V
 
     .line 168
     invoke-virtual {p0}, Landroid/widget/ImageView;->getContext()Landroid/content/Context;
@@ -641,30 +1190,30 @@
     invoke-virtual {v0, p0, v1}, Lcom/oplus/systemui/aod/display/AODDisplayUtil;->requestScreenState(Landroid/view/View;I)V
 
     .line 170
-    :goto_7c
+    :goto_7f
     invoke-super {p0, p1}, Landroid/widget/ImageView;->setVisibility(I)V
 
     .line 171
     iget-object v0, p0, Lcom/oplus/systemui/biometrics/finger/udfps/OnScreenFingerprintIcon;->parent:Landroid/widget/FrameLayout;
 
-    if-nez v0, :cond_84
+    if-nez v0, :cond_87
 
-    goto :goto_87
+    goto :goto_8a
 
-    :cond_84
+    :cond_87
     invoke-virtual {v0, p1}, Landroid/widget/FrameLayout;->setVisibility(I)V
 
     .line 172
-    :goto_87
+    :goto_8a
     invoke-virtual {p0}, Lcom/oplus/systemui/biometrics/finger/udfps/OnScreenFingerprintIcon;->sendFpCmdIfNeed()V
 
     .line 173
     invoke-virtual {p0}, Lcom/oplus/systemui/biometrics/finger/udfps/OnScreenFingerprintIcon;->updateUserDataCollectionForFp()V
 
-    goto :goto_9e
+    goto :goto_a5
 
-    :cond_8e
-    if-nez p1, :cond_9e
+    :cond_91
+    if-nez p1, :cond_a2
 
     .line 174
     invoke-virtual {p0}, Landroid/widget/ImageView;->getAlpha()F
@@ -675,16 +1224,20 @@
 
     cmpg-float p1, p1, v0
 
-    if-nez p1, :cond_9b
+    if-nez p1, :cond_9e
 
-    goto :goto_9e
+    goto :goto_a5
 
     .line 175
-    :cond_9b
+    :cond_9e
     invoke-virtual {p0, v0}, Lcom/oplus/systemui/biometrics/finger/udfps/OnScreenFingerprintIcon;->setAlpha(F)V
 
-    :cond_9e
-    :goto_9e
+    goto :goto_a5
+
+    :cond_a2
+    invoke-virtual {p0}, Lcom/oplus/systemui/biometrics/finger/udfps/OnScreenFingerprintIcon;->destroyHbmSurfaceControl()V
+
+    :goto_a5
     return-void
 .end method
 

@@ -1,5 +1,3 @@
-# classes5.dex
-
 .class public Lcom/oplus/systemui/biometrics/finger/udfps/OnScreenFpAntiMissTouchMach;
 .super Ljava/lang/Object;
 .source "OnScreenFpAntiMissTouchMach.java"
@@ -256,7 +254,7 @@
 .end method
 
 .method public constructor <init>(Landroid/content/Context;Lcom/oplus/systemui/biometrics/finger/BaseFpControl;)V
-    .registers 5
+    .registers 9
 
     .line 244
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
@@ -385,6 +383,42 @@
     invoke-direct {v0, p0, p1}, Lcom/oplus/systemui/biometrics/finger/udfps/OnScreenFpAntiMissTouchMach$5;-><init>(Lcom/oplus/systemui/biometrics/finger/udfps/OnScreenFpAntiMissTouchMach;Landroid/content/Context;)V
 
     invoke-virtual {p2, v0}, Lcom/oplus/systemui/scene/OplusSceneModeObserver;->addCallback(Lcom/oplus/systemui/scene/OplusSceneModeObserver$Callback;)V
+
+    move-object v0, p1
+
+    new-instance v0, Lcom/oplus/systemui/biometrics/finger/udfps/OnScreenFpAntiMissTouchMach$FingerKeyReceiver;
+
+    invoke-direct {v0, p0}, Lcom/oplus/systemui/biometrics/finger/udfps/OnScreenFpAntiMissTouchMach$FingerKeyReceiver;-><init>(Lcom/oplus/systemui/biometrics/finger/udfps/OnScreenFpAntiMissTouchMach;)V
+
+    new-instance v1, Landroid/content/IntentFilter;
+
+    invoke-direct {v1}, Landroid/content/IntentFilter;-><init>()V
+
+    const-string v2, "com.rianixia.FINGER_DOWN"
+
+    invoke-virtual {v1, v2}, Landroid/content/IntentFilter;->addAction(Ljava/lang/String;)V
+
+    const-string v2, "com.rianixia.FINGER_UP"
+
+    invoke-virtual {v1, v2}, Landroid/content/IntentFilter;->addAction(Ljava/lang/String;)V
+
+    move-object v3, p1
+
+    move-object v4, v0
+
+    move-object v5, v1
+
+    const/4 v2, 0x0
+
+    move-object p0, v2
+
+    move-object p1, v2
+
+    const/4 v2, 0x2
+
+    move p2, v2
+
+    invoke-virtual/range {v3 .. v8}, Landroid/content/Context;->registerReceiver(Landroid/content/BroadcastReceiver;Landroid/content/IntentFilter;Ljava/lang/String;Landroid/os/Handler;I)Landroid/content/Intent;
 
     return-void
 .end method
@@ -820,6 +854,44 @@
 
     invoke-virtual {p1, p0}, Landroid/os/Handler;->removeCallbacks(Ljava/lang/Runnable;)V
 
+    return-void
+.end method
+
+.method public run()V
+    .registers 5
+
+    .prologue
+    .line 1
+    iget-object v1, p0, Lcom/oplus/systemui/biometrics/finger/udfps/OnScreenFpAntiMissTouchMach;->mHbmDummyView:Landroid/view/View;
+
+    .line 2
+    if-nez v1, :cond_5
+
+    .line 3
+    return-void
+
+    .line 5
+    :cond_5
+    invoke-virtual {v1}, Landroid/view/View;->getViewRootImpl()Landroid/view/ViewRootImpl;
+
+    move-result-object v2
+
+    .line 6
+    if-eqz v2, :cond_14
+
+    .line 7
+    invoke-virtual {v2}, Landroid/view/ViewRootImpl;->getSurfaceControl()Landroid/view/SurfaceControl;
+
+    move-result-object v0
+
+    .line 8
+    if-eqz v0, :cond_14
+
+    .line 9
+    invoke-virtual {p0, v0}, Lcom/oplus/systemui/biometrics/finger/udfps/OnScreenFpAntiMissTouchMach;->setHbmSurfaceControl(Landroid/view/SurfaceControl;)V
+
+    .line 12
+    :cond_14
     return-void
 .end method
 

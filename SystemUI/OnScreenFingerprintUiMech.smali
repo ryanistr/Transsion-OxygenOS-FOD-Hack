@@ -1,5 +1,3 @@
-# classes5.dex
-
 .class public final Lcom/oplus/systemui/biometrics/finger/udfps/OnScreenFingerprintUiMech;
 .super Ljava/lang/Object;
 .source "OnScreenFingerprintUiMech.kt"
@@ -3962,7 +3960,7 @@
     .line 1574
     iget v2, v0, Landroid/view/WindowManager$LayoutParams;->flags:I
 
-    const v3, 0x40738
+    const v3, 0x40730
 
     or-int/2addr v2, v3
 
@@ -3988,11 +3986,11 @@
     iput v2, v0, Landroid/view/WindowManager$LayoutParams;->screenOrientation:I
 
     .line 1588
-    new-instance v2, Landroid/widget/FrameLayout;
+    new-instance v2, Lcom/oplus/systemui/biometrics/finger/udfps/FpIconLayout;
 
     iget-object v3, p0, Lcom/oplus/systemui/biometrics/finger/udfps/OnScreenFingerprintUiMech;->context:Landroid/content/Context;
 
-    invoke-direct {v2, v3}, Landroid/widget/FrameLayout;-><init>(Landroid/content/Context;)V
+    invoke-direct {v2, v3}, Lcom/oplus/systemui/biometrics/finger/udfps/FpIconLayout;-><init>(Landroid/content/Context;)V
 
     iput-object v2, p0, Lcom/oplus/systemui/biometrics/finger/udfps/OnScreenFingerprintUiMech;->fpIconLayout:Landroid/widget/FrameLayout;
 
@@ -4095,6 +4093,18 @@
 
     iput-object v1, p0, Lcom/oplus/systemui/biometrics/finger/udfps/OnScreenFingerprintUiMech;->fpIcon:Lcom/oplus/systemui/biometrics/finger/udfps/OnScreenFingerprintIcon;
 
+    const-string v4, "OnScreenFingerprintIcon"
+
+    const-string v5, "initFpIconWin: Setting fpIcon on FpIconLayout"
+
+    invoke-static {v4, v5}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+
+    iget-object v4, p0, Lcom/oplus/systemui/biometrics/finger/udfps/OnScreenFingerprintUiMech;->fpIconLayout:Landroid/widget/FrameLayout;
+
+    check-cast v4, Lcom/oplus/systemui/biometrics/finger/udfps/FpIconLayout;
+
+    invoke-virtual {v4, v1}, Lcom/oplus/systemui/biometrics/finger/udfps/FpIconLayout;->setFpIcon(Lcom/oplus/systemui/biometrics/finger/udfps/OnScreenFingerprintIcon;)V
+
     .line 1605
     new-instance v4, Lcom/oplus/systemui/biometrics/finger/udfps/OnScreenFingerprintUiMech$initFpIconWin$3;
 
@@ -4105,48 +4115,48 @@
     .line 1610
     iget-object v1, p0, Lcom/oplus/systemui/biometrics/finger/udfps/OnScreenFingerprintUiMech;->fpIcon:Lcom/oplus/systemui/biometrics/finger/udfps/OnScreenFingerprintIcon;
 
-    if-nez v1, :cond_c8
+    if-nez v1, :cond_d6
 
-    goto :goto_cb
+    goto :goto_d9
 
-    :cond_c8
+    :cond_d6
     invoke-virtual {v1, v2}, Landroid/widget/ImageView;->setLayoutParams(Landroid/view/ViewGroup$LayoutParams;)V
 
     .line 1611
-    :goto_cb
+    :goto_d9
     iget-object v1, p0, Lcom/oplus/systemui/biometrics/finger/udfps/OnScreenFingerprintUiMech;->fpIcon:Lcom/oplus/systemui/biometrics/finger/udfps/OnScreenFingerprintIcon;
 
-    if-nez v1, :cond_d0
+    if-nez v1, :cond_de
 
-    goto :goto_d3
+    goto :goto_e1
 
-    :cond_d0
+    :cond_de
     invoke-virtual {v1, v3}, Lcom/oplus/systemui/biometrics/finger/udfps/OnScreenFingerprintIcon;->setVisibility(I)V
 
     .line 1612
-    :goto_d3
+    :goto_e1
     iget-object v1, p0, Lcom/oplus/systemui/biometrics/finger/udfps/OnScreenFingerprintUiMech;->fpIcon:Lcom/oplus/systemui/biometrics/finger/udfps/OnScreenFingerprintIcon;
 
-    if-eqz v1, :cond_de
+    if-eqz v1, :cond_ec
 
     .line 1613
     iget-object v2, p0, Lcom/oplus/systemui/biometrics/finger/udfps/OnScreenFingerprintUiMech;->fpIconLayout:Landroid/widget/FrameLayout;
 
-    if-eqz v2, :cond_de
+    if-eqz v2, :cond_ec
 
     invoke-virtual {v2, v1}, Landroid/widget/FrameLayout;->addView(Landroid/view/View;)V
 
     .line 1615
-    :cond_de
+    :cond_ec
     iget-object v1, p0, Lcom/oplus/systemui/biometrics/finger/udfps/OnScreenFingerprintUiMech;->windowManager:Landroid/view/WindowManager;
 
-    if-eqz v1, :cond_e7
+    if-eqz v1, :cond_f5
 
     iget-object p0, p0, Lcom/oplus/systemui/biometrics/finger/udfps/OnScreenFingerprintUiMech;->fpIconLayout:Landroid/widget/FrameLayout;
 
     invoke-interface {v1, p0, v0}, Landroid/view/WindowManager;->addView(Landroid/view/View;Landroid/view/ViewGroup$LayoutParams;)V
 
-    :cond_e7
+    :cond_f5
     return-void
 .end method
 
