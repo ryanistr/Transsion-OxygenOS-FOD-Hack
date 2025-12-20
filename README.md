@@ -20,10 +20,10 @@ This repository outlines the **minimal manual changes** required to enable on‑
 3. **Patch** the `hwcomposer.*` library under `/vendor/lib64/hw/`
    (e.g. `hwcomposer.mtkcommon.so`, `hwcomposer.mt6893.so`, etc.)
 
-   Example using `sed`:
+   Example using `perl`:
 
    ```bash
-   sed -i 's/OnScreenFingerprintDimLayer/VRI[RianixiaHBMController]yer/g' /vendor/lib64/hw/hwcomposer.*.so
+   perl -pi -e 's/OnScreenFingerprintDimLayer/VRI[RianixiaHBMController]\x00/g' /vendor/lib64/hw/hwcomposer.mt6893.so
    ```
 4. For SOFOD run on permissive or address the sepolicy on enforcing
 
