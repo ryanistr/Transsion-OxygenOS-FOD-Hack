@@ -33,7 +33,7 @@ This repository outlines the **minimal manual changes** required to enable on‑
 
 ## Notes
 
-This patch was only used on Goodix FOD.
+This patch was only used on Goodix FOD. For other fp types, do try and see
 
 ---
 
