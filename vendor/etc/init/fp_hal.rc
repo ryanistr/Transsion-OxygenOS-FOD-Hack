@@ -6,5 +6,7 @@ service vendor.sofod-rianixia /vendor/bin/hw/fp_hal
     user system
     group system input uhid
     writepid /dev/cpuset/system-background/tasks
-	disabled
-	
+
+# add for screen off fod
+on post-fs-data
+    write /proc/gesture_function fp1
